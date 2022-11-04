@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,7 +22,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity()
-@Table(name = "Ville")
+@Table(name = "Villes")
 public class Villej {
 	/** Id de la ville */
 	@Id
@@ -41,6 +43,10 @@ public class Villej {
 	@Column (name = "Categorie", nullable = false)
 	@Enumerated (EnumType.STRING) // Stocke le nom par défaut ORDINAL
 	private Categorie categorie;
+	
+	@ManyToOne ()
+	@JoinColumn (name = "region_iD" )
+	private Regionj region;
 	
 	/**
 	 * Constructeur obligatoire
@@ -112,6 +118,18 @@ public class Villej {
 	 */
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
+	}
+	/**
+	 * @return the region
+	 */
+	public Regionj getRegion() {
+		return region;
+	}
+	/**
+	 * @param region the region to set
+	 */
+	public void setRegion(Regionj region) {
+		this.region = region;
 	}
 	
 	
