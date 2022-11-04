@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -28,7 +26,7 @@ import javax.persistence.TemporalType;
 public class Emprunt {
 	/** id Identifiant de l'emprunt */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// N'est pas en auto incrément @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", length = 10, nullable = false)
 	private Integer id;
 	
@@ -51,6 +49,7 @@ public class Emprunt {
 	@JoinTable(name = "COMPO", 
 			   joinColumns = @JoinColumn(name = "ID_EMP", referencedColumnName = "ID" ),       // ID fait référence au name du @Column 
 			   inverseJoinColumns = @JoinColumn(name = "ID_LIV", referencedColumnName = "ID")) // et non à la variable
+	// ou @ManyToMany(mappedBy="emprunts") // nom de l'attriput dans la class Livre mode Maitre esclave ici esclave
 	private List<Livre> livres = new ArrayList<Livre>();
 
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +34,9 @@ public class Habitantj {
 			   joinColumns = @JoinColumn(name = "id_hab", referencedColumnName = "Id" ),
 			   inverseJoinColumns = @JoinColumn(name = "id_ville", referencedColumnName = "Id"))
 	private List<Villej> villejs = new ArrayList<Villej>();
+	
+	@Embedded
+	private Adresse adresse;
 
 	/**
 	 * Constructeur sans paramètre Obligatoire
@@ -88,6 +92,20 @@ public class Habitantj {
 	 */
 	public List<Villej> getVillejs() {
 		return villejs;
+	}
+
+	/**
+	 * @return the adresse
+	 */
+	public Adresse getAdresse() {
+		return adresse;
+	}
+
+	/**
+	 * @param adresse the adresse to set
+	 */
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
 	}
 
 //	/** le virer

@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+
 /**
  * Classe pour tester le TP02 et TP03
  * En fin de classe il y a le script de génération des données 
@@ -21,16 +22,37 @@ public class BibliothequeTest {
 		System.out.println(eM.find(Livre.class, 1));
 		System.out.println(eM.find(Emprunt.class,1));
 		
+		// raz du mapping de ce qui suit
 		trans.begin();
-		Livre l1 = new Livre();
-		l1.setTitre("Les rois maudits");
-		l1.setAuteur("Maurice DRUON");
-		eM.persist(l1);
+		// remove du livre dans l'emprunt 1 et du livre mais ne gère pas la compo
+		Emprunt esuplivre1 = eM.find(Emprunt.class, 1);
+		for (int i = 0; i < esuplivre1.getLivres().size(); i++) {
+			Livre l_encours = esuplivre1.getLivres().get(i);
+			if (l_encours.getTitre().equals("Les rois maudits")) {
+				esuplivre1.getLivres().remove(i);
+				eM.remove(l_encours);
+			}
+		}
 		
-		Emprunt e1 = eM.find(Emprunt.class,1);
-		e1.getLivres().add(l1);
-		eM.persist(e1);
 		trans.commit();
+		Livre liv1 = new Livre();
+		liv1 =  eM.find(Livre.class, 1);
+		System.out.println("\n");
+		for (Emprunt emp : liv1.getEmprunts()) {
+			System.out.println(emp);
+		}
+		System.out.println("\n");
+		
+//		trans.begin();
+//		Livre l1 = new Livre();
+//		l1.setTitre("Les rois maudits");
+//		l1.setAuteur("Maurice DRUON");
+//		eM.persist(l1);
+//		
+//		Emprunt e1 = eM.find(Emprunt.class,1);
+//		e1.getLivres().add(l1);
+//		eM.persist(e1);
+//		trans.commit();
 		
 		System.out.println(eM.find(Emprunt.class,1));
 		
